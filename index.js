@@ -8,6 +8,20 @@ var devRant = require("rantscript");
 const save = util.promisify(fs.writeFile);
 var imgur = require("imgur");
 
+async function load(url) {  
+  const writer = fs.createWriteStream("meme.jpg")
+  const response = await axios({
+    url,
+    method: 'GET',
+    responseType: 'stream'
+  })
+  response.data.pipe(writer)
+  return new Promise((resolve, reject) => {
+    writer.on('finish', resolve)
+    writer.on('error', reject)
+  })
+}
+
 (async function() {
   var browser = await puppeteer.launch({args: ['--no-sandbox']});
   var page = await browser.newPage();
@@ -115,7 +129,34 @@ var imgur = require("imgur");
 ]);
   
   try {
+  await load("https://nerdist.com/wp-content/uploads/2020/07/maxresdefault.jpg");
+  await page.setViewport({width: 330, height: 530});
   await page.goto("https://instagram.com/",{waitUntil: 'networkidle0'});
+
+ const [fileChooser] = await Promise.all([
+  page.waitForFileChooser(),
+  page.click("div[data-testid='new-post-button']")
+]);
+
+await fileChooser.accept(['meme.jpg']);
+
+await page.waitFor(1000);
+
+await page.evaluate(function() {
+  document.querySelectorAll("button")[1].click();
+});
+
+await page.waitFor(500);
+
+await page.evaluate(function() {
+  document.querySelectorAll("textarea")[0].value = "Test Image";
+});
+
+await page.evaluate(function() {
+  document.querySelectorAll("button")[1].click();
+});
+  
+await page.waitFor(2000);
     
   await page.screenshot({path: 'ss.png'});
   var link = (await imgur.uploadFile('ss.png')).data.link;
