@@ -25,7 +25,7 @@ async function load(url) {
 (async function() {
   var browser = await puppeteer.launch({args: ['--no-sandbox']});
   var page = await browser.newPage();
-  await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36');
+  await page.setUserAgent('Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Mobile Safari/537.36');
   await page.setCookie(...[
   {
     name: 'urlgen',
