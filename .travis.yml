@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - "14.1.0"
+script:
+  - node index.js $qpass
+install:
+  - npm install
