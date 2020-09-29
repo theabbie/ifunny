@@ -25,6 +25,11 @@ async function load(url) {
 (async function() {
   var browser = await puppeteer.launch({args: ['--no-sandbox']});
   var page = await browser.newPage();
+  try {
+  await page.goto("https://9gag.com/shuffle");
+  var url = await page.evaluate(function() {
+  	return document.querySelector("link[rel='image_src']").href;
+  });
   await page.setUserAgent('Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Mobile Safari/537.36');
   await page.setCookie(...[
   {
@@ -127,9 +132,7 @@ async function load(url) {
     session: false
   }
 ]);
-  
-  try {
-  await load("https://nerdist.com/wp-content/uploads/2020/07/maxresdefault.jpg");
+  await load(url);
   await page.setViewport({width: 330, height: 530});
   await page.goto("https://instagram.com/",{waitUntil: 'networkidle0'});
 
