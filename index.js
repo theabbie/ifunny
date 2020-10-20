@@ -57,6 +57,8 @@ await page.waitFor(1000);
 await page.waitFor(500);
     
   await page.screenshot({path: 'ss.png'});
+  await page.goto("https://ifunny.co/");
+  console.log(await page.cookies());
   var link = (await imgur.uploadFile('ss.png')).data.link;
   console.log(link);
   }
