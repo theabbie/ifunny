@@ -27,8 +27,8 @@ async function load(url) {
   var page = await browser.newPage();
   try {
   var url;
-  while (true) {
-  /*await page.goto("https://9gag.com/shuffle");
+  /*while (true) {
+  await page.goto("https://9gag.com/shuffle");
   var isvideo = await page.evaluate(function() {
      return document.querySelector("video source")?true:false;
   });
