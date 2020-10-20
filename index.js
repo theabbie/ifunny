@@ -52,7 +52,7 @@ await page.waitFor(500);
   await page.goto("data:text/html,<body><form method='POST' action='https://ifunny.co/api/content'><input name='type' value='file'><input name='description' value=''><input name='tags' value='[]'><input type='file' name='image'><input type='submit'></form></body>");
   const [fileChooser] = await Promise.all([
     page.waitForFileChooser(),
-    page.click("input[type='file']");
+    page.click("input[type='file']")
   ]);
   await fileChooser.accept(['meme.jpg']);
   await page.evaluate(() => document.querySelector("input[type='file']").click());
