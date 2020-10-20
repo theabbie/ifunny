@@ -26,10 +26,18 @@ async function load(url) {
   var browser = await puppeteer.launch({args: ['--no-sandbox']});
   var page = await browser.newPage();
   try {
+  var url;
+  while (true) {
   await page.goto("https://9gag.com/shuffle");
-  var url = await page.evaluate(function() {
-  	return document.querySelector("link[rel='image_src']").href;
+  var isvideo = await page.evaluate(function() {
+     return document.querySelector("video source")?true:false;
   });
+  url = await page.evaluate(function() {
+     return document.querySelector("link[rel='image_src']").href;
+  });
+  if (!isvideo) break;
+  }
+  console.log(url);
   await page.setUserAgent('Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Mobile Safari/537.36');
   await page.setCookie(...[
   {
