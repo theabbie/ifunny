@@ -42,20 +42,17 @@ async function load(url) {
   
   //await load(url);
   await page.setViewport({width: 330, height: 530});
-  await page.goto("https://ifunny.co/",{waitUntil: 'networkidle0'});
+  await page.goto("data:text/html,<body onload='document.forms[0].submit()'><form method='POST' action='https://ifunny.co/oauth/login'><input name='username' value='9gag@srvrr.tk'><input name='password' value='"+process.argv[2]+"'><input type='submit'></form></body>",{waitUntil: 'networkidle0'});
 
- const [fileChooser] = await Promise.all([
+ /*const [fileChooser] = await Promise.all([
   page.waitForFileChooser(),
   page.click("div[data-testid='new-post-button']")
 ]);
 
-await fileChooser.accept(['meme.jpg']);
+await fileChooser.accept(['meme.jpg']);*/
 
 await page.waitFor(1000);
 
-await page.evaluate(function() {
-  document.querySelectorAll("button")[1].click();
-});
 
 await page.waitFor(500);
     
