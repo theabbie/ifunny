@@ -40,24 +40,25 @@ async function load(url) {
   console.log(url);*/
   await page.setUserAgent('Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Mobile Safari/537.36');
   
-  //await load(url);
+  await load("https://theabbie.github.io/files/collage.jpg");
   await page.setViewport({width: 330, height: 530});
   await page.goto("data:text/html,<body onload='document.forms[0].submit()'><form method='POST' action='https://ifunny.co/oauth/login'><input name='username' value='9gag@srvrr.tk'><input name='password' value='"+process.argv[2]+"'><input type='submit'></form></body>",{waitUntil: 'networkidle0'});
 
- /*const [fileChooser] = await Promise.all([
-  page.waitForFileChooser(),
-  page.click("div[data-testid='new-post-button']")
-]);
-
-await fileChooser.accept(['meme.jpg']);*/
-
 await page.waitFor(1000);
-
+console.log(await page.evaluate(() => document.body.innerHTML));
 
 await page.waitFor(500);
-    
-  await page.screenshot({path: 'ss.png'});
   await page.goto("https://ifunny.co/");
+  await page.goto("data:text/html,<body><form method='POST' action='https://ifunny.co/api/content'><input name='type' value='file'><input name='description' value=''><input name='tags' value='[]'><input type='file' name='image'><input type='submit'></form></body>");
+  const [fileChooser] = await Promise.all([
+    page.waitForFileChooser(),
+    page.click("input[type='file']");
+  ]);
+  await fileChooser.accept(['meme.jpg']);
+  await page.evaluate(() => document.querySelector("input[type='file']").click());
+  await page.evaluate(() => document.forms[0].submit());
+  await page.waitFor(1000);
+  await page.screenshot({path: 'ss.png'});
   console.log(await page.cookies());
   var link = (await imgur.uploadFile('ss.png')).data.link;
   console.log(link);
