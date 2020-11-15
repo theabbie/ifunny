@@ -1,5 +1,5 @@
 {
-  "name": "ifunny-api",
+  "name": "node-ifunny",
   "version": "1.0.0",
   "description": "Unofficial API Wrapper for iFunny",
   "main": "index.js",
