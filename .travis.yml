@@ -1,7 +1,10 @@
 language: node_js
 node_js:
-  - "14.1.0"
-script:
-  - node index.js $pass
-install:
-  - npm install
+  - "12.13"
+
+deploy:
+  provider: npm
+  email: "${EMAIL}"
+  api_key: "${NPM}"
+  on:
+    branch: main

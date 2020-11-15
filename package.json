@@ -1,22 +1,27 @@
 {
-  "name": "puppeteer",
+  "name": "ifunny-api",
   "version": "1.0.0",
-  "description": "simple",
+  "description": "Unofficial API Wrapper for iFunny",
   "main": "index.js",
-  "engines": {
-    "node": "12.x"
-  },
   "scripts": {
-    "build": "next build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"working\""
   },
+  "funding": "https://theabbie.github.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theabbie/ifunny.git"
+  },
+  "keywords": [
+    "ifunny",
+    "theabbie"
+  ],
+  "author": "theabbie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theabbie/ifunny/issues"
+  },
+  "homepage": "https://github.com/theabbie/ifunny#readme",
   "dependencies": {
-    "puppeteer": "^1.18.1",
-    "cheerio": "^0.22.0",
-    "rantscript": "^1.4.0",
-    "axios": "^0.19.0",
-    "imgur": "^0.3.1"
-  },
-  "author": "",
-  "license": "ISC"
+    "axios": "^0.21.0"
+  }
 }
