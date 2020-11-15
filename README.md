@@ -32,6 +32,5 @@ Contact me anywhere, just visit [my portfolio](https://theabbie.github.io)
 
 ## License
 
-This project is licensed under MIT License, See [LICENSE](/LICENSE) for more information
-
+This project is licensed under MIT License, See [LICENSE](/LICENSE) for more information.
 
