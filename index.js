@@ -33,8 +33,8 @@ module.exports = class Ifunny {
     return this.token
   }
 
-  async load(url) {  
-    const writer = fs.createWriteStream("meme.jpg")
+  async load(url,name) {  
+    const writer = fs.createWriteStream(name);
     const response = await axios({
       url,
       method: 'GET',
@@ -47,13 +47,32 @@ module.exports = class Ifunny {
     })
   }
 
-  async post(url,desc,tags) {
-    await load(url);
+  async postimg(url,desc,tags) {
+    await this.load(url,"meme.jpg");
     var data = new fd();
     data.append("type","pic");
     data.append("desc",desc || "");
     data.append("tags",tags?("["+tags.toString()+"]"):"[]");
     data.append("image", fs.createReadStream('meme.jpg'));
+    var res = await axios({
+      url: "https://api.ifunny.mobi/v4/content",
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + this.token,
+	...data.getHeaders()
+      },
+      data: data
+    });
+    return res.data;
+  }
+
+  async postvid(url,desc,tags) {
+    await this.load(url,"meme.mp4");
+    var data = new fd();
+    data.append("type","video_clip");
+    data.append("desc",desc || "");
+    data.append("tags",tags?("["+tags.toString()+"]"):"[]");
+    data.append("video", fs.createReadStream('meme.jpg'));
     var res = await axios({
       url: "https://api.ifunny.mobi/v4/content",
       method: "POST",
