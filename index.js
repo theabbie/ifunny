@@ -33,6 +33,10 @@ module.exports = class Ifunny {
     return this.token
   }
 
+  addToken(token) {
+    this.token = token;
+  }
+
   async load(url,name) {  
     const writer = fs.createWriteStream(name);
     const response = await axios({
