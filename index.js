@@ -1,4 +1,6 @@
 var axios = require("axios");
+var fs = require("fs");
+var fd = require("form-data");
 
 headers = {
     'Host': 'api.ifunny.mobi',
@@ -29,5 +31,38 @@ module.exports = class Ifunny {
     });
     this.token = auth.data["access_token"]
     return this.token
+  }
+
+  async load(url) {  
+    const writer = fs.createWriteStream("meme.jpg")
+    const response = await axios({
+      url,
+      method: 'GET',
+      responseType: 'stream'
+    })
+    response.data.pipe(writer)
+    return new Promise((resolve, reject) => {
+      writer.on('finish', resolve)
+      writer.on('error', reject)
+    })
+  }
+
+  async post(url,desc,tags) {
+    await load(url);
+    var data = new fd();
+    data.append("type","pic");
+    data.append("desc",desc || "");
+    data.append("tags",tags?("["+tags.toString()+"]"):"[]");
+    data.append("image", fs.createReadStream('meme.jpg'));
+    var res = await axios({
+      url: "https://api.ifunny.mobi/v4/content",
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + this.token,
+	...data.getHeaders()
+      },
+      data: data
+    });
+    return res.data;
   }
 }
